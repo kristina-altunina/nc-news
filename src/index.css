@@ -12,6 +12,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+
 }
 
 a {
@@ -26,9 +27,76 @@ a:hover {
 body {
   margin: 0;
   display: flex;
-  place-items: center;
+  flex-direction: column;
+  align-items: center;
   min-width: 320px;
   min-height: 100vh;
+  
+}
+
+header {
+  background-color: #3f3f3f;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+  width: 100%
+}
+
+.main-container {
+  display: flex;
+  align-items: flex-start;
+  
+}
+
+nav {
+  background-color:#ccc;
+  padding: 20px;
+  width: 200px;
+}
+
+ul {
+  list-style: none;
+  padding: 10px;
+  font-size: small;
+}
+
+li {
+  margin: 5px;
+  font-size: medium;
+}
+
+.navigation {
+  font-size: x-large;
+  font-weight: bold;
+}
+
+.main-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  flex: 3; 
+  
+}
+
+.popular-articles {
+  
+  padding-left: 55px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 3; 
+}
+
+
+.article-card {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  width: 300px;
 }
 
 h1 {
