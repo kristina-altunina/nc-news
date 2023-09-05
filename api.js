@@ -18,7 +18,7 @@ export const fetchPopularArticles = () => {
     )
 }
 
-export const fetchArticle = (article_id ) => {
+export const fetchArticle = (article_id) => {
     return (
         axios.get(`https://news-j34n.onrender.com/api/articles/${article_id}`)
         .then(({data}) => {
@@ -30,3 +30,11 @@ export const fetchArticle = (article_id ) => {
     )
 }
 
+export const fetchComments = (article_id) => {
+    return (
+        axios.get(`https://news-j34n.onrender.com/api/articles/${article_id}/comments`)
+        .then(({data}) => {
+            return data;
+        })
+    )
+}
