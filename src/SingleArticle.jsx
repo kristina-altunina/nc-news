@@ -4,7 +4,7 @@ import * as api from "../api"
 
 const SingleArticle = () => {
     const {article_id} = useParams();
-    const [article, setArticle] = useState(null)
+    const [article, setArticle] = useState("")
     const [isLoading, setIsLoading] = useState(false);  
     const [isError, setIsError] = useState(false);
 
@@ -15,11 +15,10 @@ useEffect(() => {
     api.fetchArticle(article_id)
     .then(data => {
         setIsLoading(false);
-
-        if (data) {
         setArticle(data);
-        } else {
-            setArticle(null)
+        
+        if (!data) {
+        setIsError(true);
         }
     })
     .catch((err) => {
@@ -30,8 +29,7 @@ useEffect(() => {
 
 
 if (isLoading) return <p className="loading">Loading...</p>
-if (isError) return <p>Something went wrong</p>
-if (article === null) return <p>Article not found</p>
+if (isError) return <p>Not found</p>
         
     return (
         <main className="single-article">

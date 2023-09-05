@@ -18,6 +18,7 @@ const [isError, setIsError] = useState(false);
         setPopularArticles(sortedArticles.slice(0, 5));
     })
     .catch((err) => {
+        setIsLoading(false);
         setIsError(true);
     })
 }, []);
