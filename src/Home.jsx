@@ -1,21 +1,30 @@
 import React from "react";
 import { useEffect, useState } from 'react';
 import ArticleCard from "./ArticleCard";
-import * as api from '../api'
+import * as api from '../api';
 
 const Home = () => {
 const [popularArticles, setPopularArticles] = useState([]);
-  
+const [isLoading, setIsLoading] = useState(false);  
+const [isError, setIsError] = useState(false);
+
   useEffect (() => {
+    setIsLoading(true);
+    setIsError(false);
+    
     api.fetchArticles().then(data => {
-        console.log(data);
         const sortedArticles = data.articles.sort((a, b) => (a.votes - b.votes)) //check if this works when I create a button to vote
+        setIsLoading(false);
         setPopularArticles(sortedArticles.slice(0, 5));
     })
     .catch((err) => {
-        console.log(err)
+        setIsLoading(false);
+        setIsError(true);
     })
 }, []);
+
+if (isLoading) return <p className="loading">Loading...</p>
+if (isError) return <p>Something went wrong</p>
 
 return (
     <section>
