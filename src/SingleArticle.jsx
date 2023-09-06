@@ -31,17 +31,28 @@ useEffect(() => {
     })
 }, [article_id]);
 
-if (isLoading) return <p className="loading">Loading...</p>
-if (isError) return <p>Not found</p>
-
-
 const handleVote = (vote) => {
+    let count = 0;
+
     if (vote === "up") {
+        count = 1;
         setUpdateVote(updateVote + 1)
     } else if (vote === "down") {
+        count = -1;
         setUpdateVote(updateVote - 1)
     }
+    
+    api.patchArticle(article_id, count)
+        .then(() => {
+            setIsError(false);
+        })
+        .catch((err) => {
+            setIsError(true);
+})
 }
+
+if (isLoading) return <p className="loading">Loading...</p>
+if (isError) return <p>Error</p>
     
     return (
         <main className="single-article">
