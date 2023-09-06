@@ -8,6 +8,7 @@ const CommentCard = ({comment}) => {
             <h5>{new Date(comment.created_at).toLocaleDateString()}</h5>
             <p>{comment.body}</p>
             <p>Votes: {comment.votes}</p>
+            
         </div>
     )
 }
