@@ -5,16 +5,21 @@ import * as api from '../api'
 
 const CommentList = ({article_id}) => {
   const [comments, setComments] = useState([]);
-  
+  const [error, setError] = useState(false);
+
   useEffect (() => {
+    setError(false);
+
     api.fetchComments(article_id)
     .then(response => {
-        console.log(response.comments);
         setComments(response.comments);
     })
     .catch((err) => {
-        console.log(err);;
+        setError(true)
     });
+
+if (error) return <p>Failed to fetch comments</p>
+
 }, [article_id]);
 
     return (   

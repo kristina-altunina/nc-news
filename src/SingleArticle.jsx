@@ -5,9 +5,11 @@ import CommentList from "./CommentList";
 
 const SingleArticle = () => {
     const {article_id} = useParams();
-    const [article, setArticle] = useState({})
+    const [article, setArticle] = useState({});
+    const [updateVote, setUpdateVote] = useState(0);
     const [isLoading, setIsLoading] = useState(false);  
     const [isError, setIsError] = useState(false);
+
 
 useEffect(() => {
     setIsLoading(true);
@@ -17,6 +19,7 @@ useEffect(() => {
     .then(data => {
         setIsLoading(false);
         setArticle(data);
+        setUpdateVote(data.votes);
         
         if (!data) {
         setIsError(true);
@@ -28,10 +31,18 @@ useEffect(() => {
     })
 }, [article_id]);
 
-
 if (isLoading) return <p className="loading">Loading...</p>
 if (isError) return <p>Not found</p>
-        
+
+
+const handleVote = (vote) => {
+    if (vote === "up") {
+        setUpdateVote(updateVote + 1)
+    } else if (vote === "down") {
+        setUpdateVote(updateVote - 1)
+    }
+}
+    
     return (
         <main className="single-article">
             <h2>{article.title}</h2>
@@ -40,7 +51,9 @@ if (isError) return <p>Not found</p>
             <img src ={article.article_img_url} alt={article.title} className="article-image"/> 
             <p>{article.body}</p>
             <p>#{article.topic}</p>
-            <p>Votes: {article.votes}</p>
+            <p>Votes: {updateVote}</p>
+            <button onClick={() => handleVote("up")}>👍</button>
+            <button onClick={() => handleVote("down")}>👎</button>
             <CommentList article_id={article_id} />
         </main>
     )

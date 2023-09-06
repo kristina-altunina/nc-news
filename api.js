@@ -1,9 +1,12 @@
-import axios from "axios"
+import axios from "axios";
+
+const axiosInstance = axios.create({
+    baseURL: "https://news-j34n.onrender.com/api/"
+});
 
 export const fetchArticles = () => {
     return (
-        axios.get("https://news-j34n.onrender.com/api/articles")
-        .then(({data}) => {
+        axiosInstance.get("articles").then(({data}) => {
             return data;
         })
     )
@@ -11,8 +14,7 @@ export const fetchArticles = () => {
 
 export const fetchPopularArticles = () => {
     return (
-        axios.get("https://news-j34n.onrender.com/api/articles?sortBy=votes")
-        .then(({data}) => {
+        axiosInstance.get("articles?sortBy=votes").then(({data}) => {
             return data;
         })
     )
@@ -20,8 +22,7 @@ export const fetchPopularArticles = () => {
 
 export const fetchArticle = (article_id) => {
     return (
-        axios.get(`https://news-j34n.onrender.com/api/articles/${article_id}`)
-        .then(({data}) => {
+        axiosInstance.get(`articles/${article_id}`).then(({data}) => {
             return data.article;
         })
         .catch((err) => {
@@ -32,8 +33,7 @@ export const fetchArticle = (article_id) => {
 
 export const fetchComments = (article_id) => {
     return (
-        axios.get(`https://news-j34n.onrender.com/api/articles/${article_id}/comments`)
-        .then(({data}) => {
+        axiosInstance.get(`articles/${article_id}/comments`).then(({data}) => {
             return data;
         })
     )
