@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import * as api from "../api"
+import CommentList from "./CommentList";
 
 const SingleArticle = () => {
     const {article_id} = useParams();
-    const [article, setArticle] = useState("")
+    const [article, setArticle] = useState({})
     const [isLoading, setIsLoading] = useState(false);  
     const [isError, setIsError] = useState(false);
 
@@ -40,6 +41,7 @@ if (isError) return <p>Not found</p>
             <p>{article.body}</p>
             <p>#{article.topic}</p>
             <p>Votes: {article.votes}</p>
+            <CommentList article_id={article_id} />
         </main>
     )
 }
