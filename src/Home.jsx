@@ -13,7 +13,7 @@ const [isError, setIsError] = useState(false);
     setIsError(false);
     
     api.fetchArticles().then(data => {
-        const sortedArticles = data.articles.sort((a, b) => (a.votes - b.votes)) //check if this works when I create a button to vote
+        const sortedArticles = data.articles.sort((a, b) => (b.votes - a.votes)) //check if this works when I create a button to vote
         setIsLoading(false);
         setPopularArticles(sortedArticles.slice(0, 5));
     })
