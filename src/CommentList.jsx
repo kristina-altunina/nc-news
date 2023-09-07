@@ -29,7 +29,7 @@ const CommentList = ({ article_id }) => {
 
   return (
     <section className="comments-list">
-      <h3>Comments</h3>
+      <h3>Comments ({comments.length})</h3>
       <CommentAdder article_id={article_id} updateComments={updateComments} />
       <ul>
         {comments.map((comment) => {
