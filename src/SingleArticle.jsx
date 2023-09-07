@@ -9,7 +9,7 @@ const SingleArticle = () => {
     const [updateVote, setUpdateVote] = useState(0);
     const [isLoading, setIsLoading] = useState(false);  
     const [isError, setIsError] = useState(false);
-
+    const [voteError, setVoteError] = useState(false);
 
 useEffect(() => {
     setIsLoading(true);
@@ -20,10 +20,6 @@ useEffect(() => {
         setIsLoading(false);
         setArticle(data);
         setUpdateVote(data.votes);
-        
-        if (!data) {
-        setIsError(true);
-        }
     })
     .catch((err) => {
         setIsLoading(false);
@@ -32,27 +28,19 @@ useEffect(() => {
 }, [article_id]);
 
 const handleVote = (vote) => {
-    let count = 0;
-
-    if (vote === "up") {
-        count = 1;
-        setUpdateVote(updateVote + 1)
-    } else if (vote === "down") {
-        count = -1;
-        setUpdateVote(updateVote - 1)
-    }
-    
-    api.patchArticle(article_id, count)
+    api.patchArticle(article_id, vote)
         .then(() => {
-            setIsError(false);
+            setUpdateVote(updateVote + vote)
+            setVoteError(false)
         })
         .catch((err) => {
-            setIsError(true);
+            console.log(updateVote);
+            setVoteError(true);
 })
 }
 
 if (isLoading) return <p className="loading">Loading...</p>
-if (isError) return <p>Error</p>
+if (isError) return <p>Something went wrong</p>
     
     return (
         <main className="single-article">
@@ -63,8 +51,9 @@ if (isError) return <p>Error</p>
             <p>{article.body}</p>
             <p>#{article.topic}</p>
             <p>Votes: {updateVote}</p>
-            <button onClick={() => handleVote("up")}>👍</button>
-            <button onClick={() => handleVote("down")}>👎</button>
+            <button onClick={() => handleVote(1)}>👍</button>
+            <button onClick={() => handleVote(-1)}>👎</button>
+            <p className="vote-error"> {voteError ? "Something went wrong. Please try again" : ""} </p>
             <CommentList article_id={article_id} />
         </main>
     )

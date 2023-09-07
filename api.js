@@ -1,12 +1,12 @@
 import axios from "axios";
 
-const axiosInstance = axios.create({
+const newsApi = axios.create({
     baseURL: "https://news-j34n.onrender.com/api/"
 });
 
 export const fetchArticles = () => {
     return (
-        axiosInstance.get("articles").then(({data}) => {
+        newsApi.get("articles").then(({data}) => {
             return data;
         })
     )
@@ -14,7 +14,7 @@ export const fetchArticles = () => {
 
 export const fetchPopularArticles = () => {
     return (
-        axiosInstance.get("articles?sortBy=votes").then(({data}) => {
+        newsApi.get("articles?sortBy=votes").then(({data}) => {
             return data;
         })
     )
@@ -22,37 +22,29 @@ export const fetchPopularArticles = () => {
 
 export const fetchArticle = (article_id) => {
     return (
-        axiosInstance.get(`articles/${article_id}`).then(({data}) => {
+        newsApi.get(`articles/${article_id}`).then(({data}) => {
             return data.article;
-        })
-        .catch((err) => {
-            console.log(err);
         })
     )
 }
 
 export const patchArticle = (article_id, inc_votes) => {
     const vote =  {inc_votes};
-
+    
     return (
-        axiosInstance.patch(`articles/${article_id}`, vote).then(({data}) => {
+        newsApi.patch(`articles/${article_id}`, vote).then(({data}) => {
             return data.article;
-        })
-        .catch((err) => {
-            console.log(err);
         })
     )
 }
 
-
 export const fetchComments = (article_id) => {
     return (
-        axiosInstance.get(`articles/${article_id}/comments`).then(({data}) => {
+        newsApi.get(`articles/${article_id}/comments`).then(({data}) => {
             return data.comments;
         })
     )
 }
-
 
 export const postComment = (article_id, comment) => {
     const newComment = {
@@ -60,8 +52,24 @@ export const postComment = (article_id, comment) => {
                         body: comment
                         }
     return (
-        axiosInstance.post(`articles/${article_id}/comments`, newComment).then(({data}) => {
+        newsApi.post(`articles/${article_id}/comments`, newComment).then(({data}) => {
             return data.comment;
         })
     )}
+
+export const fetchTopics = () => {
+    return (
+        newsApi.get("topics").then(({data}) => {
+                return data;
+        })
+    )
+}
     
+export const fetchArticleByTopic = (slug) => {
+    return (
+        newsApi.get(`articles`).then(({data}) => {
+            const articles = data.articles.filter(article => article.topic === slug);
+            return articles;
+        })
+    )
+}    

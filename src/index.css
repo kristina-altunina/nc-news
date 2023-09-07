@@ -123,6 +123,11 @@ li {
   max-width: 80%;
 }
 
+.vote-error {
+  color: red;
+  font-size: 0.8em;
+}
+
 .comments-list {
   margin-top: 30px;
   border-top: 2px solid #ccc;
@@ -153,6 +158,41 @@ li {
 .comment-card p{
   font-size: 1em;
   line-height: 1.2;
+}
+
+#new-comment {
+  margin: 0px;
+  width: 250px;
+  height: 14px;
+  resize: none;
+}
+
+.is-submitting {
+  margin-top: -8px; 
+  font-size: 0.8em;
+}
+
+.topic-card {
+  background-color: #e8e8e8;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;  
+  text-align: start;
+}
+
+.topic-link {
+  font-weight: bold;
+}
+
+.topic-link:hover {
+  text-decoration: underline;
+}
+
+.topic-page-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 10px;
 }
 
 h1 {
