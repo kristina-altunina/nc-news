@@ -13,9 +13,8 @@ const [isError, setIsError] = useState(false);
     setIsError(false);
     
     api.fetchArticles().then(data => {
-        const sortedArticles = data.articles.sort((a, b) => (b.votes - a.votes)) //check if this works when I create a button to vote
         setIsLoading(false);
-        setPopularArticles(sortedArticles.slice(0, 5));
+        setPopularArticles(data.articles.slice(0, 5));
     })
     .catch((err) => {
         setIsLoading(false);
@@ -30,7 +29,7 @@ return (
     <section>
         <main className="main-container">
             <div className="main-content">
-            <h2 className="popular-articles">Most Popular Articles: </h2>
+            <h2 className="popular-articles">Most Recent Articles: </h2>
             <div>
                 <ul className="article-list">
                     {popularArticles.map(article=>{

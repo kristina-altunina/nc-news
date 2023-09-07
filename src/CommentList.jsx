@@ -20,7 +20,6 @@ const CommentList = ({ article_id }) => {
   }, [article_id]);
 
   const updateComments = (newComment) => {
-    console.log(newComment);
     setComments((prevComments) => {
       return [newComment, ...prevComments];
     });

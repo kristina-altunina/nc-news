@@ -8,6 +8,7 @@ const ArticleCard = ({article}) => {
               <Link to={`/articles/${article.article_id}`}>{article.title}</Link>
                 </h3>
             <h4>Written By: {article.author}</h4>
+            <h4>Published on: {new Date(article.created_at).toLocaleDateString()}</h4>
             <img src={article.article_img_url} alt={article.title} />
             <p>#{article.topic}</p>
             <p>Votes: {article.votes}</p>
