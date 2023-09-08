@@ -46,4 +46,3 @@ return (
 export default Home
 
 
-//StackOverflow - sort by descending order //stackoverflow.com/questions/44535972/react-js-sort-by-ascending-and-descending

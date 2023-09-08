@@ -64,11 +64,56 @@ export const fetchTopics = () => {
         })
     )
 }
+
+export const fetchTopicByTopicName = (topicName) => {
+    return (
+        newsApi.get(`topics/${topicName}`).then(({data}) => {
+            return data.topic;
+        })
+    )
+}
     
-export const fetchArticleByTopic = (slug) => {
+export const fetchArticleByTopic = (topicChoice, sortBy) => {
     return (
         newsApi.get(`articles`).then(({data}) => {
-            const articles = data.articles.filter(article => article.topic === slug);
+            let articles = data.articles.filter(article => article.topic === topicChoice);
+            
+            if (sortBy === "date-desc") {
+                articles.sort((a, b) => { 
+                    return new Date(b.created_at) - new Date(a.created_at);
+                    })
+                }
+
+            if (sortBy === "date-asc") {
+                articles.sort((a, b) => { 
+                    return new Date(a.created_at) - new Date(b.created_at);
+                    })
+                }
+
+            if (sortBy === "commentCount-desc") {
+                articles.sort((a, b) => { 
+                    return b.comment_count - a.comment_count;
+                    })
+                }
+
+            if (sortBy === "commentCount-asc") {
+                articles.sort((a, b) => { 
+                    return a.comment_count - b.comment_count;
+                    })
+                }
+
+            if (sortBy === "votes-desc") {
+                articles.sort((a, b) => { 
+                    return b.votes - a.votes;
+                    })
+                }
+    
+            if (sortBy === "votes-asc") {
+                articles.sort((a, b) => { 
+                    return a.votes - b.votes;
+                    })
+                }
+
             return articles;
         })
     )
