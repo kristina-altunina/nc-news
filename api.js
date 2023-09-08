@@ -64,6 +64,14 @@ export const fetchTopics = () => {
         })
     )
 }
+
+export const fetchTopicByTopicName = (topicName) => {
+    return (
+        newsApi.get(`topics/${topicName}`).then(({data}) => {
+            return data.topic;
+        })
+    )
+}
     
 export const fetchArticleByTopic = (topicChoice, sortBy) => {
     return (

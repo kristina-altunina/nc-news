@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import ArticleCard from "./ArticleCard";
+import NotFound from "./NotFound";
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import * as api from "../api";
@@ -22,18 +23,33 @@ const SingleTopic = () => {
     const [isLoading, setIsLoading] = useState(false);  
     const [isError, setIsError] = useState(false);
     const [selected, setSelected] = useState(sortBy[0].value);
+    const [notFound, setNotFound] = useState(false);
 
     const fetchArticle = (topicName, sortByOption) => {
         setIsLoading(true);
         setIsError(false);
-    
-        api.fetchArticleByTopic(topicName, sortByOption).then(data => {
+        setNotFound(false);
+
+        Promise.all([
+            api.fetchTopicByTopicName(topicName),
+            api.fetchArticleByTopic(topicName, sortByOption)
+        ])
+        .then((resolvedPromises) => {
+            const topic = resolvedPromises[0]
+            const article = resolvedPromises[1]
+            console.log(article, "A<---");
+            console.log(topic, "T<---");
             setIsLoading(false);
-            setArticles(data);
+            setArticles(article);
         })
         .catch((err) => {
+            console.log(err);
             setIsLoading(false);
+            if(err.response.status == 404) {
+                setNotFound(true)
+            } else {
             setIsError(true);
+            }
         })
     }
     useEffect (() => {
@@ -42,6 +58,7 @@ const SingleTopic = () => {
 
     if (isLoading) return <p className="loading">Loading...</p>
     if (isError) return <p>Something went wrong</p>
+    if (notFound) return <NotFound message={`Topic: ${topicName}`}/>
 
     const handleChange = (e) => {
         let params = {sortBy: e.value};
